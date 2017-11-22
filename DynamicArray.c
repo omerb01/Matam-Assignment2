@@ -7,11 +7,18 @@
 #include <assert.h>
 
 #include "DynamicArray.h"
+#include "Course.h"
 
-// TODO: EARASE
-int coursesEqualId(Element course1, Element course2) {
-    return 1;
-}
+#define UPDATE_ELEMENTS_SIZE($$dynamic_array$$, $$size$$) \
+    if (updateElementsSize(($$dynamic_array$$), ($$size$$)) == DA_MEMORY_ERROR) { \
+        return DA_MEMORY_ERROR; \
+    } \
+
+#define CHECK_INDEX($$dynamic_array$$, $$index$$) \
+    if ((($$index$$) < 0 || ($$index$$) >= ($$dynamic_array$$)->len)) { \
+        return DA_ILLEGAL_INDEX; \
+    } \
+
 
 DynamicArray createDynamicArray() {
     DynamicArray dynamic_array = (DynamicArray) malloc(sizeof(DynamicArray));
@@ -38,17 +45,6 @@ static DAResult updateElementsSize(DynamicArray dynamic_array, int new_size) {
     dynamic_array->elements = array;
     return DA_OK;
 }
-
-#define UPDATE_ELEMENTS_SIZE($$dynamic_array$$, $$size$$) \
-    if (updateElementsSize(($$dynamic_array$$), ($$size$$)) == DA_MEMORY_ERROR) { \
-        return DA_MEMORY_ERROR; \
-    } \
-
-#define CHECK_INDEX($$dynamic_array$$, $$index$$) \
-    if ((($$index$$) < 0 || ($$index$$) >= ($$dynamic_array$$)->len)) { \
-        return DA_ILLEGAL_INDEX; \
-    } \
-
 
 static void swapElements(Element *element1, Element *element2) {
     assert(element1 != NULL && element2 != NULL);
@@ -125,4 +121,28 @@ DAResult updateElement(DynamicArray dynamic_array, int index, Element element) {
     CHECK_INDEX(dynamic_array, index);
     dynamic_array->elements[index] = element;
     return DA_OK;
+}
+
+// TODO: CHECK WITH ILIYA'S FUNCTION
+DAResult displayElement(DynamicArray dynamic_array, int index) {
+    CHECK_INDEX(dynamic_array, index);
+    displayCourse(dynamic_array->elements[index]);
+    return DA_OK;
+}
+
+// TODO: CHECK WITH ILIYA'S FUNCTION
+void displayAllElements(DynamicArray dynamic_array) {
+    for (int i = 0; i < dynamic_array->len; ++i) {
+        displayElement(dynamic_array, i);
+        printf("\n");
+    }
+}
+
+int size(DynamicArray dynamic_array) {
+    return dynamic_array->len;
+}
+
+void destroyDynamicArray(DynamicArray dynamic_array) {
+    free(dynamic_array->elements);
+    free(dynamic_array);
 }

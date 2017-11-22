@@ -7,6 +7,10 @@
 #include <stdlib.h>
 #include <assert.h>
 
+int coursesEqualId(Course course1, Course course2){return 1;}
+void displayCourse(Course course1){}
+void destroyCourse(Course course1){}
+
 /*
 static char* duplicateString(const char* str)
 {
