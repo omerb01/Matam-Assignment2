@@ -5,9 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-
-#include "DynamicArray.h"
 #include "Course.h"
+#include "DynamicArray.h"
+
 
 #define UPDATE_ELEMENTS_SIZE($$dynamic_array$$, $$size$$) \
     if (updateElementsSize(($$dynamic_array$$), ($$size$$)) == DA_MEMORY_ERROR) { \

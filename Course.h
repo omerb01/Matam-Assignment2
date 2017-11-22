@@ -21,7 +21,7 @@ typedef enum { COURSE_OK , COURSE_MEMORY_ERROR , COURSE_ILLEGAL_PARAMETER ,
 //------------------------------------------------------------------------------------------
 // create a new course with the details of the parameters id , name , credits;
 // no pre courses are defined here.
-// id and name should be copied into the new crated course by duplication.
+// id and name should be copied into the new created course by duplication.
 // they must not be changed.
 // Either id or name or course must not be NULL. (handled by assert).
 // course is an output parameter which gets the created new course.
@@ -76,7 +76,7 @@ CourseResult removePreCourse(Course course1, Course course2);
 // id , name , credits , ids of pre courses.
 // credits is displayed in the format of %.1f
 // the ids of pre courses are dispalyed sorted from left to right from small to big.
-// between evert 2 adjacent word the is a single space. no spaces in the beginning of the line or
+// between every 2 adjacent words there is a single space. no spaces in the beginning of the line or
 // at its end. no new line at the end of the displayed line.
 
 void displayCourse(Course course1);

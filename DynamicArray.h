@@ -2,13 +2,15 @@
 #define DYNAMIC_ARRAY_H
 
 
-typedef struct course *Element;
+typedef struct cours *Element;
 
 typedef struct dynamic_array
 {
     int len;
     Element *elements;
 } *DynamicArray;
+
+DynamicArray da;
 
 
 /*******************************************************************/
@@ -21,6 +23,7 @@ typedef enum { DA_OK , DA_MEMORY_ERROR , DA_ILLEGAL_INDEX } DAResult;
 // Create a new empty array
 // returns the new array or NULL if can not create one
 DynamicArray createDynamicArray();
+
 
 //------------------------------------------------------------------------------------------
 // Enlarge the array and add a given element to the array in a position that appears
@@ -43,12 +46,13 @@ DAResult addElementEnd(DynamicArray, Element);
 
 //------------------------------------------------------------------------------------------
 // result_index gets an index in the array da at which there exists an element that its id is equal to the id if a given element c.
-// the result index is the first (lowest) index that is equal or greater to base_index.
+// the result index is the first (lowest) index that is equal or grea   ter to base_index.
 // The comparison between 2 elements is done by using the function coursesEqualId that is guaranteed to be supplied by the data type Course.
 // if No element is found, then result_index gets -1.
 // da ,c and result_index must not be NULL. (checked by assert).
 // return values : DA_OK, DA_ILLEGAL_INDEX.
 DAResult indexOfElement(DynamicArray da, Element c , int base_index, int *result_index);
+
 
 //------------------------------------------------------------------------------------------
 // Delete an element (a course) at a given position (index)
@@ -65,7 +69,8 @@ DAResult updateElement(DynamicArray da, int id, Element element);
 
 //------------------------------------------------------------------------------------------
 // display the element in the given index i.
-// this function uses the displayCourse function that is guaranteed to exist in the Course data type.
+// this function uses the displayCourse function th
+// at is guaranteed to exist in the Course data type.
 // no need to do here '\n'.
 // return values : DA_OK, DA_ILLEGAL_INDEX
 DAResult displayElement(DynamicArray da, int i);
@@ -80,6 +85,7 @@ void displayAllElements(DynamicArray);
 //------------------------------------------------------------------------------------------
 // returns the number of elements in the array.
 // return values : CDA_OK
+
 int size(DynamicArray);
 
 //------------------------------------------------------------------------------------------
