@@ -2,16 +2,13 @@
 #define DYNAMIC_ARRAY_H
 
 
-typedef struct cours *Element;
+typedef struct course *Element;
 
 typedef struct dynamic_array
 {
     int len;
     Element *elements;
 } *DynamicArray;
-
-DynamicArray da;
-
 
 /*******************************************************************/
 /* Interface of data type DynamicArray  */
