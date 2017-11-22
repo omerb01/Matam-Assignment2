@@ -8,6 +8,7 @@
 
 #include "DynamicArray.h"
 
+// TODO: EARASE
 int coursesEqualId(Element course1, Element course2) {
     return 1;
 }
@@ -44,8 +45,7 @@ static DAResult updateElementsSize(DynamicArray dynamic_array, int new_size) {
     } \
 
 #define CHECK_INDEX($$dynamic_array$$, $$index$$) \
-    if ((($$index$$) < 0 || ($$index$$) >= ($$dynamic_array$$)->len) && \
-($$index$$) != 0) { \
+    if ((($$index$$) < 0 || ($$index$$) >= ($$dynamic_array$$)->len)) { \
         return DA_ILLEGAL_INDEX; \
     } \
 
@@ -77,6 +77,12 @@ index) {
 }
 
 DAResult addElementStart(DynamicArray dynamic_array, Element element) {
+    if (dynamic_array->len == 0) {
+        UPDATE_ELEMENTS_SIZE(dynamic_array, dynamic_array->len + 1);
+        dynamic_array->elements[0] = element;
+        return DA_OK;
+    }
+
     return addElementBefore(dynamic_array, element, 0);
 }
 
@@ -86,6 +92,7 @@ DAResult addElementEnd(DynamicArray dynamic_array, Element element) {
     return DA_OK;
 }
 
+// TODO: CHECK WITH ILIYA'S FUNCTION
 DAResult indexOfElement(DynamicArray dynamic_array, Element element, int
 base_index, int *result_index) {
     CHECK_INDEX(dynamic_array, base_index);
@@ -102,14 +109,32 @@ base_index, int *result_index) {
     return DA_OK;
 }
 
+DAResult removeElement(DynamicArray dynamic_array, int index) {
+    CHECK_INDEX(dynamic_array, index);
+
+    for (int i = index; i < dynamic_array->len - 1; ++i) {
+        swapElements(dynamic_array->elements + i,
+                     dynamic_array->elements + i + 1);
+    }
+
+    UPDATE_ELEMENTS_SIZE(dynamic_array, dynamic_array->len - 1);
+    return DA_OK;
+}
+
+DAResult updateElement(DynamicArray dynamic_array, int index, Element element) {
+    CHECK_INDEX(dynamic_array, index);
+    dynamic_array->elements[index] = element;
+    return DA_OK;
+}
+
 int main() {
     DynamicArray da = createDynamicArray();
 
     Element element1 = malloc(sizeof(Element));
-    //element1->data = 111;
+    element1->data = 111;
 
     Element element2 = malloc(sizeof(Element));
-    //element2->data = 222;
+    element2->data = 222;
 
     addElementStart(da, element1);
     addElementStart(da, element1);
@@ -117,17 +142,21 @@ int main() {
     addElementStart(da, element1);
 
     addElementBefore(da, element2, 1);
-
     addElementEnd(da, element2);
 
     for (int i = 0; i < da->len; ++i) {
         assert(da->elements[i] != NULL);
-        //printf("%d, ", da->elements[i]->data);
+        printf("%d, ", da->elements[i]->data);
     }
+    printf("\n");
 
-    int index;
-    indexOfElement(da, element1, 0, &index);
-    printf("\n%d", index);
+    removeElement(da, 1);
+
+    for (int i = 0; i < da->len; ++i) {
+        assert(da->elements[i] != NULL);
+        printf("%d, ", da->elements[i]->data);
+    }
+    printf("\n");
 
     free(element1);
     free(element2);

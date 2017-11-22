@@ -2,7 +2,10 @@
 #define DYNAMIC_ARRAY_H
 
 
-typedef struct course *Element;
+typedef struct course1
+{
+    int data;
+} *Element;
 
 typedef struct dynamic_array
 {
