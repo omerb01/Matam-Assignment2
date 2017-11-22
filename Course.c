@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
+/*
 static char* duplicateString(const char* str)
 {
     int new_string_size = strlen(str);
@@ -20,4 +21,9 @@ CourseResult createCourse(char *id, char *name, double credits, Course *course)
     assert(name != NULL && id != NULL && course != NULL);
     if(credits < 0) return COURSE_ILLEGAL_PARAMETER;
     return COURSE_OK;
+}
+*/
+
+int main() {
+    return 0;
 }
