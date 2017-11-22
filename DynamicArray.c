@@ -5,7 +5,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+
 #include "DynamicArray.h"
+
+int coursesEqualId(Element course1, Element course2) {
+    return 1;
+}
 
 DynamicArray createDynamicArray() {
     DynamicArray dynamic_array = (DynamicArray) malloc(sizeof(DynamicArray));
@@ -59,7 +64,7 @@ index) {
 
     for (int i = dynamic_array->len - 1; i >= 0; i--) {
         if (index == i) {
-            (dynamic_array->elements)[i] = element;
+            dynamic_array->elements[i] = element;
             break;
         }
         if (i != 0) {
@@ -75,14 +80,36 @@ DAResult addElementStart(DynamicArray dynamic_array, Element element) {
     return addElementBefore(dynamic_array, element, 0);
 }
 
+DAResult addElementEnd(DynamicArray dynamic_array, Element element) {
+    UPDATE_ELEMENTS_SIZE(dynamic_array, dynamic_array->len + 1);
+    dynamic_array->elements[dynamic_array->len - 1] = element;
+    return DA_OK;
+}
+
+DAResult indexOfElement(DynamicArray dynamic_array, Element element, int
+base_index, int *result_index) {
+    CHECK_INDEX(dynamic_array, base_index);
+    assert(result_index != NULL);
+
+    *result_index = -1;
+    for (int i = base_index; i < dynamic_array->len; ++i) {
+        if (coursesEqualId(element, dynamic_array->elements[i]) == 1) {
+            *result_index = i;
+            break;
+        }
+    }
+
+    return DA_OK;
+}
+
 int main() {
     DynamicArray da = createDynamicArray();
 
     Element element1 = malloc(sizeof(Element));
-    element1->data = 111;
+    //element1->data = 111;
 
     Element element2 = malloc(sizeof(Element));
-    element2->data = 222;
+    //element2->data = 222;
 
     addElementStart(da, element1);
     addElementStart(da, element1);
@@ -91,10 +118,16 @@ int main() {
 
     addElementBefore(da, element2, 1);
 
+    addElementEnd(da, element2);
+
     for (int i = 0; i < da->len; ++i) {
         assert(da->elements[i] != NULL);
-        printf("%d, ", da->elements[i]->data);
+        //printf("%d, ", da->elements[i]->data);
     }
+
+    int index;
+    indexOfElement(da, element1, 0, &index);
+    printf("\n%d", index);
 
     free(element1);
     free(element2);
