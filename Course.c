@@ -23,7 +23,3 @@ CourseResult createCourse(char *id, char *name, double credits, Course *course)
     return COURSE_OK;
 }
 */
-
-int main() {
-    return 0;
-}
