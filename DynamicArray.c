@@ -58,13 +58,13 @@ index) {
     UPDATE_ELEMENTS_SIZE(dynamic_array, dynamic_array->len + 1);
 
     for (int i = dynamic_array->len - 1; i >= 0; i--) {
+        if (index == i) {
+            (dynamic_array->elements)[i] = element;
+            break;
+        }
         if (i != 0) {
             swapElements(dynamic_array->elements + i,
                          dynamic_array->elements + i - 1);
-        }
-        if (index == i) {
-            dynamic_array->elements[i] = element;
-            break;
         }
     }
 
@@ -84,13 +84,12 @@ int main() {
     Element element2 = malloc(sizeof(Element));
     element2->data = 222;
 
-    addElementBefore(da, element1, 0);
-    addElementBefore(da, element1, 0);
-    addElementBefore(da, element1, 0);
-    addElementBefore(da, element1, 0);
+    addElementStart(da, element1);
+    addElementStart(da, element1);
+    addElementStart(da, element1);
+    addElementStart(da, element1);
 
     addElementBefore(da, element2, 1);
-    // TODO: אסרט נכשל
 
     for (int i = 0; i < da->len; ++i) {
         assert(da->elements[i] != NULL);
