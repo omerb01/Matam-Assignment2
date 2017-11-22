@@ -3,7 +3,7 @@ project(Assinment2)
 
 set(CMAKE_C_STANDARD 99)
 
-set(SOURCE_FILES main.c)
+set(SOURCE_FILES DynamicArray.c)
 add_executable(Assinment2 ${SOURCE_FILES})
 
 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall -Werror -pedantic")
