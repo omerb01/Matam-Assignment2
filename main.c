@@ -7,20 +7,24 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include "Course.h"
+#include "CourseSystem.h"
 
 int main()
 {
-    Course c1;
-    createCourse("234111", "Computer Science", 3.0, &c1);
-    Course c2;
-    createCourse("234118", "Omer", 3.0, &c2);
+    CourseSystem system = createSystem("sys");
 
-    addElementStart(c1->preCourses, c2);
-    addElementStart(c1->preCourses, c1);
-    addElementStart(c1->preCourses, c2);
+    Course course1;
+    createCourse("234118", "omer", 5.0, &course1);
 
-    displayCourse(c1);
+    Course course2;
+    createCourse("234111", "moshe", 5.0, &course2);
+
+    sysAddCourse(system, course1);
+    sysAddCourse(system, course2);
+
+    printf("%d\n", system->courses->len);
+    printf("%s\n", system->courses->elements[0]->id);
+    printf("%s\n", system->courses->elements[1]->id);
 
     return 0;
 }
