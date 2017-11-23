@@ -2,7 +2,6 @@
 // Created by Omer on 22/11/2017.
 //
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -22,9 +21,9 @@ int main()
     sysAddCourse(system, course1);
     sysAddCourse(system, course2);
 
-    printf("%d\n", system->courses->len);
-    printf("%s\n", system->courses->elements[0]->id);
-    printf("%s\n", system->courses->elements[1]->id);
+    addElementStart(course2->preCourses, course1);
+
+    displaySystem(system);
 
     return 0;
 }
