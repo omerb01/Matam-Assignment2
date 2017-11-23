@@ -11,15 +11,14 @@
 
 int main()
 {
-    DynamicArray da = createDynamicArray();
-
     Course c1;
     createCourse("234111", "Computer Science", 3.0, &c1);
+    Course c2;
+    createCourse("234118", "Omer", 3.0, &c2);
 
-    addElementStart(da, c1);
-    printf("%d", da->len);
-    removeElement(da, 0);
-    printf("%d", da->len);
+    addElementStart(c1->preCourses, c2);
+
+    displayCourse(c1);
 
     return 0;
 }
