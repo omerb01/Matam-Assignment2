@@ -75,7 +75,7 @@ void displayCourse(Course course1) {
     static int to_pre_course = 0;
     if (to_pre_course == 0) {
         to_pre_course = 1;
-        printf("%s , %s , %.1f , ", course1->id, course1->name,
+        printf("%s %s %.1f ", course1->id, course1->name,
                course1->credits);
         for (int i = 0; i < size(course1->preCourses); ++i) {
             displayElement(course1->preCourses, i);

@@ -17,6 +17,8 @@ int main()
     createCourse("234118", "Omer", 3.0, &c2);
 
     addElementStart(c1->preCourses, c2);
+    addElementStart(c1->preCourses, c1);
+    addElementStart(c1->preCourses, c2);
 
     displayCourse(c1);
 
