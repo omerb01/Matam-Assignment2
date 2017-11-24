@@ -35,8 +35,6 @@ CourseSystem createSystem(char *name) {
 }
 
 static int isCourseExist(CourseSystem system, Course course) {
-    if (size(system->courses) == 0) return 0;
-
     int index;
     indexOfElement(system->courses, course, 0, &index);
 
@@ -95,13 +93,11 @@ SysResult sysIsPreCourse(CourseSystem system, char *course_id1, char
     Course course1 = findCourseById(system, course_id1);
     Course course2 = findCourseById(system, course_id2);
 
-    if (isCourseExist(system, course1) == 0 || isCourseExist(system, course2)
-                                               == 0) {
+    if (course1 == NULL || course2 == NULL) {
         return SYS_NOT_IN_SYSTEM;
     }
 
     *result = 0;
-    if (size(getPreCourses(course1)) == 0) return SYS_OK;
 
     int index;
     indexOfElement(getPreCourses(course1), course2, 0, &index);
@@ -118,8 +114,7 @@ SysResult sysRemovePreCourse(CourseSystem system, char *course_id1, char
     Course course1 = findCourseById(system, course_id1);
     Course course2 = findCourseById(system, course_id2);
 
-    if(isCourseExist(system, course1) == 0 || isCourseExist(system, course2)
-                                              == 0) {
+    if (course1 == NULL || course2 == NULL) {
         return SYS_NOT_IN_SYSTEM;
     }
 
@@ -134,9 +129,5 @@ void displaySystem(CourseSystem system) {
     assert(system != NULL);
 
     printf("%s\n", system->name);
-    for (int i = 0; i < size(system->courses); ++i) {
-        Course currect_course = getCourse(system, i);
-        displayCourse(currect_course);
-        printf("\n");
-    }
+    displayAllElements(system->courses);
 }
