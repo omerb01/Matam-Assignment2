@@ -91,7 +91,7 @@ DAResult addElementEnd(DynamicArray dynamic_array, Element element) {
 DAResult indexOfElement(DynamicArray dynamic_array, Element element, int
 base_index, int *result_index) {
     assert(result_index != NULL);
-    *result_index = -1; // BE CAREFULL: if len=0 indexOfElement returns error
+    *result_index = -1; // FOR YOUR OWN SAFETY: if len=0 , returns error
     CHECK_INDEX(dynamic_array, base_index);
 
     for (int i = base_index; i < dynamic_array->len; ++i) {
