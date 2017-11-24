@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
+CourseResult removePreCourse(Course course1, Course course2){return COURSE_OK;}
 
 static char* duplicateString(const char* str)
 {

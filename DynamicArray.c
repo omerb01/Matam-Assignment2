@@ -88,13 +88,12 @@ DAResult addElementEnd(DynamicArray dynamic_array, Element element) {
     return DA_OK;
 }
 
-// TODO: CHECK WITH ILIYA'S FUNCTION
 DAResult indexOfElement(DynamicArray dynamic_array, Element element, int
 base_index, int *result_index) {
-    CHECK_INDEX(dynamic_array, base_index);
     assert(result_index != NULL);
+    *result_index = -1; // FOR YOUR OWN SAFETY: if len=0 , returns error
+    CHECK_INDEX(dynamic_array, base_index);
 
-    *result_index = -1;
     for (int i = base_index; i < dynamic_array->len; ++i) {
         if (coursesEqualId(element, dynamic_array->elements[i]) == 1) {
             *result_index = i;
@@ -123,14 +122,12 @@ DAResult updateElement(DynamicArray dynamic_array, int index, Element element) {
     return DA_OK;
 }
 
-// TODO: CHECK WITH ILIYA'S FUNCTION
 DAResult displayElement(DynamicArray dynamic_array, int index) {
     CHECK_INDEX(dynamic_array, index);
     displayCourse(dynamic_array->elements[index]);
     return DA_OK;
 }
 
-// TODO: CHECK WITH ILIYA'S FUNCTION
 void displayAllElements(DynamicArray dynamic_array) {
     for (int i = 0; i < dynamic_array->len; ++i) {
         displayElement(dynamic_array, i);

@@ -2,25 +2,28 @@
 // Created by Omer on 22/11/2017.
 //
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 
-#include "Course.h"
+#include "CourseSystem.h"
 
 int main()
 {
-    Course c1;
-    createCourse("234111", "Computer Science", 3.0, &c1);
-    Course c2;
-    createCourse("234118", "Omer", 3.0, &c2);
+    CourseSystem system = createSystem("sys");
 
-    addElementStart(c1->preCourses, c2);
-    addElementStart(c1->preCourses, c1);
-    addElementStart(c1->preCourses, c2);
+    Course course1;
+    createCourse("234118", "omer", 5.0, &course1);
 
-    displayCourse(c1);
+    Course course2;
+    createCourse("234111", "moshe", 5.0, &course2);
+
+    sysAddCourse(system, course1);
+    sysAddCourse(system, course2);
+
+    addElementStart(course2->preCourses, course1);
+
+    displaySystem(system);
 
     return 0;
 }
