@@ -15,6 +15,14 @@ else if ($$error$$ == DA_ILLEGAL_INDEX) {return COURSE_ILLEGAL_PARAMETER;} \
 
 // TODO: CHECK WITH OMER THE ILLEGAL INDEX, SHOULDN'T GET THIS ERROR ANYHOW ****
 
+static char *duplicateString(const char *str);
+
+static int compareCoursesById(Course course1, Course course2);
+
+static Course getPreCourse(Course c, int index);
+
+static int isPreCourseExist(Course c1, Course c2);
+
 static char *duplicateString(const char *str) {
     int new_string_size = strlen(str);
     char *duplicated_string = malloc(new_string_size * sizeof(char) + 1);
@@ -107,8 +115,7 @@ CourseResult addPreCourse(Course course1, Course course2) {
     if (pre_course_size == 0) {
         CHECK_DA_MEMORY_ERROR(addElementStart(course1->preCourses, course2));
         return COURSE_OK;
-    }
-    else {
+    } else {
         Course pre_course;
         for (int i = 0; i < pre_course_size; i++) {
             pre_course = getPreCourse(course1, i);
@@ -131,9 +138,9 @@ CourseResult removePreCourse(Course course1, Course course2) {
     DAResult temp;
     int index_of_course2;
     temp = indexOfElement(course1->preCourses, course2, 0, &index_of_course2);
-    if(temp == DA_ILLEGAL_INDEX) return COURSE_ILLEGAL_PARAMETER;
+    if (temp == DA_ILLEGAL_INDEX) return COURSE_ILLEGAL_PARAMETER;
 
-    CHECK_DA_MEMORY_ERROR(removeElement(course1->preCourses,index_of_course2));
+    CHECK_DA_MEMORY_ERROR(removeElement(course1->preCourses, index_of_course2));
     return COURSE_OK;
 }
 
