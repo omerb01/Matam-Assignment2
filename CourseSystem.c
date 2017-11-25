@@ -67,7 +67,6 @@ SysResult sysRemoveCourse(CourseSystem sys, char *course_id) {
     assert(sys != NULL && course_id != NULL);
     Course course_to_be_removed = findCourseById(sys, course_id);
     if (course_to_be_removed == NULL) return SYS_NOT_IN_SYSTEM;
-    CourseResult course_error;
 
     Course course_in_system;
     for (int i = 0; i < size(sys->courses); i++) {
