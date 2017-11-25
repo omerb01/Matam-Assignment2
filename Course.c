@@ -134,7 +134,9 @@ CourseResult removePreCourse(Course course1, Course course2) {
     assert(course1 != NULL && course2 != NULL);
     if (isPreCourseExist(course1, course2) == 0) return COURSE_NOT_EXIST;
 
+    int index_of_course2;
     indexOfElement(course1->preCourses, course2, 0, &index_of_course2);
+
     DA_CONVERT_ERROR(removeElement(course1->preCourses, index_of_course2));
     return COURSE_OK;
 }
