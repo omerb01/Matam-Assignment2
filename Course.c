@@ -11,7 +11,7 @@
 #define CONVERT_DA_ERROR($$function$$) \
 DAResult $$error$$ = ($$function$$) ; \
 if ($$error$$ == DA_MEMORY_ERROR) {return COURSE_MEMORY_ERROR;} \
-else if ($$error$$ == DA_ILLEGAL_INDEX) {return COURSE_ILLEGAL_PARAMETER;} \
+else if ($$error$$ == DA_ILLEGAL_INDEX) {return COURSE_NOT_EXIST;} \
 
 static char *duplicateString(const char *str);
 
