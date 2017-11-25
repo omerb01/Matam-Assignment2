@@ -72,9 +72,7 @@ SysResult sysRemoveCourse(CourseSystem sys, char *course_id) {
     Course course_in_system;
     for (int i = 0; i < size(sys->courses); i++) {
         course_in_system = getCourse(sys, i);
-        course_error = removePreCourse(course_in_system,
-                                              course_to_be_removed);
-        if (course_error == COURSE_NOT_EXIST) return SYS_NOT_IN_SYSTEM;
+        removePreCourse(course_in_system, course_to_be_removed);
     }
 
     int index_to_remove;
