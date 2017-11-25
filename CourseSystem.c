@@ -24,6 +24,7 @@ static Course findCourseById(CourseSystem system, char *course_id);
 static DynamicArray getPreCourses(Course course);
 
 static char *duplicateString(const char *str) {
+    if (str == NULL) return NULL;
     int new_string_size = strlen(str);
     char *duplicated_string = malloc(new_string_size * sizeof(char) + 1);
     if (duplicated_string == NULL) return NULL;

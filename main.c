@@ -29,6 +29,18 @@ int main()
     sysAddCourse(system, course3);
     sysAddCourse(system, course4);
 
+    addElementStart(course2->preCourses, course1);
+    addPreCourse(course1,course2);
+    addPreCourse(course1,course3);
+    addPreCourse(course1,course4);
+    displayCourse(course1);
+    printf("\nRemoving course....\n");
+    removePreCourse(course1, course4);
+    displayCourse(course1);
+    //displaySystem(system);
+    printf("change name...\n");
+    courseUpdateName(course4, "I despise combi KuS EMEK");
+    displayCourse(course4);
     sysAddPreCourse(system, "omer", "I hate combi");
 
     displaySystem(system);

@@ -24,6 +24,7 @@ static Course getPreCourse(Course c, int index);
 static int isPreCourseExist(Course c1, Course c2);
 
 static char *duplicateString(const char *str) {
+    if (str == NULL) return NULL;
     int new_string_size = strlen(str);
     char *duplicated_string = malloc(new_string_size * sizeof(char) + 1);
     if (duplicated_string == NULL) return NULL;
