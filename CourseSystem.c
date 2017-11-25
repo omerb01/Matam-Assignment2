@@ -16,14 +16,12 @@ static char *duplicateString(const char *str);
 
 static Course getCourse(CourseSystem system, int index);
 
-static char *duplicateString(const char *str);
-
 static Course findCourseById(CourseSystem system, char *course_id);
 
 static DynamicArray getPreCourses(Course course);
 
 static char *duplicateString(const char *str) {
-    if (str == NULL) return NULL;
+    if (strcmp(str, "") == 0) return NULL;
     int new_string_size = strlen(str);
     char *duplicated_string = malloc(new_string_size * sizeof(char) + 1);
     if (duplicated_string == NULL) return NULL;
@@ -90,6 +88,7 @@ SysResult sysRemoveCourse(CourseSystem sys, char *course_id) {
 }
 
 CourseSystem createSystem(char *name) {
+    if(strcmp(name, "") == 0) return NULL;
     CourseSystem system = malloc(sizeof(CourseSystem));
     if (system == NULL) return NULL;
     DynamicArray courses = createDynamicArray();
@@ -181,6 +180,7 @@ SysResult sysRemovePreCourse(CourseSystem system, char *course_id1, char
 SysResult
 sysUpdateCourseName(CourseSystem sys, char *course_id, char *new_name) {
     assert(sys != NULL && course_id != NULL && new_name != NULL);
+    if(strcmp(new_name, "") == 0) return SYS_MEMORY_PROBLEM;
     char *duplicated_name = duplicateString(new_name);
     char *old_name;
     if (duplicated_name == NULL) return SYS_MEMORY_PROBLEM;

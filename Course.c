@@ -22,7 +22,7 @@ static Course getPreCourse(Course c, int index);
 static int isPreCourseExist(Course c1, Course c2);
 
 static char *duplicateString(const char *str) {
-    if (str == NULL) return NULL;
+    if (strcmp(str, "") == 0) return NULL;
     int new_string_size = strlen(str);
     char *duplicated_string = malloc(new_string_size * sizeof(char) + 1);
     if (duplicated_string == NULL) return NULL;
@@ -54,6 +54,8 @@ CourseResult
 createCourse(char *id, char *name, double credits, Course *course) {
     assert(name != NULL && id != NULL && course != NULL);
     if (credits < 0) return COURSE_ILLEGAL_PARAMETER;
+    if (strcmp(id, "") == 0 || strcmp(name, "") == 0) return
+                COURSE_MEMORY_ERROR;
 
     Course new_course;
     new_course = malloc(sizeof(*new_course));
@@ -95,6 +97,7 @@ int courseLessThan(Course course1, Course course2) {
 
 CourseResult courseUpdateName(Course course1, char *new_name) {
     assert(course1 != NULL && new_name != NULL);
+    if(strcmp(new_name, "") == 0) return COURSE_MEMORY_ERROR;
     char *temp_store_name = course1->name;
     char *name = duplicateString(new_name);
     if (name == NULL) return COURSE_MEMORY_ERROR;
