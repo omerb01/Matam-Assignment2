@@ -22,21 +22,17 @@ int main()
     createCourse("234141", "I hate combi", 3.5, &course3);
 
     Course course4;
-    createCourse("234141", "I hate c0mbi", 3.5, &course4);
+    createCourse("234142", "I hate c0mbi", 3.5, &course4);
 
     sysAddCourse(system, course1);
     sysAddCourse(system, course2);
     sysAddCourse(system, course3);
+    sysAddCourse(system, course4);
 
-    addElementStart(course2->preCourses, course1);
-    addPreCourse(course1,course2);
-    addPreCourse(course1,course3);
-    addPreCourse(course1,course4);
-    displayCourse(course1);
-    printf("\nRemoving course....\n");
-    removePreCourse(course1, course4);
-    displayCourse(course1);
-    //displaySystem(system);
+    sysAddPreCourse(system, "omer", "I hate combi");
+
+    displaySystem(system);
+
 
     return 0;
 }
