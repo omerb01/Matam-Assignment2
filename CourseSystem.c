@@ -13,12 +13,26 @@ DAResult $$error$$ = ($$function$$) ; \
 if ($$error$$ == DA_MEMORY_ERROR) {return SYS_MEMORY_PROBLEM;} \
 
 
+static char *duplicateString(const char *str);
+
+static Course getCourse(CourseSystem system, int index);
+
+static char *duplicateString(const char *str);
+
+static Course findCourseById(CourseSystem system, char *course_id);
+
+static DynamicArray getPreCourses(Course course);
+
 static char *duplicateString(const char *str) {
     int new_string_size = strlen(str);
     char *duplicated_string = malloc(new_string_size * sizeof(char) + 1);
     if (duplicated_string == NULL) return NULL;
     strcpy(duplicated_string, str);
     return duplicated_string;
+}
+
+static Course getCourse(CourseSystem system, int index) {
+    return system->courses->elements[index];
 }
 
 static Course findCourseById(CourseSystem system, char *course_id) {
@@ -43,10 +57,6 @@ static int isCourseExist(CourseSystem system, Course course) {
     }
 }
 
-static Course getCourse(CourseSystem system, int index) {
-    return system->courses->elements[index];
-}
-
 static DynamicArray getPreCourses(Course course) {
     return course->preCourses;
 }
@@ -60,15 +70,21 @@ SysResult sysRemoveCourse(CourseSystem sys, char *course_id) {
     assert(sys != NULL && course_id != NULL);
     Course course_to_be_removed = findCourseById(sys, course_id);
     if (course_to_be_removed == NULL) return SYS_NOT_IN_SYSTEM;
+    int index_to_remove;
+    indexOfElement(sys->courses, course_to_be_removed, 0, &index_to_remove);
+    //no need to check validity, because the element is in the system(we checked
+    // beforehand
 
     Course course_in_system;
     for (int i = 0; i < size(sys->courses); i++) {
         //TODO: should check DA error and not course as stated in the word file
-        course_in_system = getCourse(sys->courses, i);
-        CHECK_DA_MEMORY_ERROR(removePreCourse(course_in_system->preCourses,
+        course_in_system = getCourse(sys, i);
+        CHECK_DA_MEMORY_ERROR(removePreCourse(course_in_system,
                                               course_to_be_removed));
     }
-    CHECK_DA_MEMORY_ERROR(removeElement(sys->courses, course_to_be_removed));
+
+
+    CHECK_DA_MEMORY_ERROR(removeElement(sys->courses, index_to_remove));
     destroyCourse(course_to_be_removed);
 
     return SYS_OK;
@@ -190,11 +206,12 @@ void displaySystem(CourseSystem system) {
 
 
 void destroySystem(CourseSystem sys) {
+    Course course_to_remove;
     for (int i = 0; i < size(sys->courses); i++) {
-        sysRemoveCourse(sys->courses, i);
+        course_to_remove = getCourse(sys, i);
+        sysRemoveCourse(sys, course_to_remove->name);
     }
     free(sys->name);
-    CHECK_DA_MEMORY_ERROR(destroyDynamicArray(sys->courses));
+    destroyDynamicArray(sys->courses);
     free(sys);
-    return SYS_OK;
 }
