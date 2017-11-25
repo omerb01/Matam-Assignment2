@@ -8,12 +8,10 @@
 #include <assert.h>
 #include <stdio.h>
 
-#define CHECK_DA_MEMORY_ERROR($$function$$) \
+#define DA_CONVERT_ERROR($$function$$) \
 DAResult $$error$$ = ($$function$$) ; \
 if ($$error$$ == DA_MEMORY_ERROR) {return COURSE_MEMORY_ERROR;} \
 else if ($$error$$ == DA_ILLEGAL_INDEX) {return COURSE_ILLEGAL_PARAMETER;} \
-
-// TODO: CHECK WITH OMER THE ILLEGAL INDEX, SHOULDN'T GET THIS ERROR ANYHOW ****
 
 static char *duplicateString(const char *str);
 
@@ -43,7 +41,7 @@ static Course getPreCourse(Course c, int index) {
 
 static int isPreCourseExist(Course c1, Course c2) {
     int index_of_c2;
-    CHECK_DA_MEMORY_ERROR(indexOfElement(c1->preCourses, c2, 0, &index_of_c2));
+    DA_CONVERT_ERROR(indexOfElement(c1->preCourses, c2, 0, &index_of_c2));
     if (index_of_c2 == -1) {
         return 0;
     } else {
@@ -114,20 +112,20 @@ CourseResult addPreCourse(Course course1, Course course2) {
 
     int pre_course_size = size(course1->preCourses);
     if (pre_course_size == 0) {
-        CHECK_DA_MEMORY_ERROR(addElementStart(course1->preCourses, course2));
+        DA_CONVERT_ERROR(addElementStart(course1->preCourses, course2));
         return COURSE_OK;
     } else {
         Course pre_course;
         for (int i = 0; i < pre_course_size; i++) {
             pre_course = getPreCourse(course1, i);
             if (courseLessThan(course2, pre_course) == 1) {
-                CHECK_DA_MEMORY_ERROR(
+                DA_CONVERT_ERROR(
                         addElementBefore(course1->preCourses, course2,
                                          i));
                 return COURSE_OK;
             }
         }
-        CHECK_DA_MEMORY_ERROR(addElementEnd(course1->preCourses, course2));
+        DA_CONVERT_ERROR(addElementEnd(course1->preCourses, course2));
         return COURSE_OK;
     }
 }
@@ -136,12 +134,8 @@ CourseResult removePreCourse(Course course1, Course course2) {
     assert(course1 != NULL && course2 != NULL);
     if (isPreCourseExist(course1, course2) == 0) return COURSE_NOT_EXIST;
 
-    DAResult temp;
-    int index_of_course2;
-    temp = indexOfElement(course1->preCourses, course2, 0, &index_of_course2);
-    if (temp == DA_ILLEGAL_INDEX) return COURSE_ILLEGAL_PARAMETER;
-
-    CHECK_DA_MEMORY_ERROR(removeElement(course1->preCourses, index_of_course2));
+    indexOfElement(course1->preCourses, course2, 0, &index_of_course2);
+    DA_CONVERT_ERROR(removeElement(course1->preCourses, index_of_course2));
     return COURSE_OK;
 }
 
