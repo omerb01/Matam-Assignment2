@@ -53,6 +53,7 @@ static int isPreCourseExist(Course c1, Course c2) {
 CourseResult
 createCourse(char *id, char *name, double credits, Course *course) {
     assert(name != NULL && id != NULL && course != NULL);
+    
     if (credits < 0) return COURSE_ILLEGAL_PARAMETER;
     if (strcmp(id, "") == 0 || strcmp(name, "") == 0) return
                 COURSE_MEMORY_ERROR;

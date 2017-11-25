@@ -40,7 +40,6 @@ static Course findCourseById(CourseSystem system, char *course_id) {
             return currect_course;
         }
     }
-
     return NULL;
 }
 
@@ -149,6 +148,11 @@ SysResult
 sysAddPreCourse(CourseSystem sys, char *course_id1, char *course_id2) {
     assert(sys != NULL && course_id1 != NULL && course_id2 != NULL);
     Course course1, course2;
+    int is_already_precourse;
+    sysIsPreCourse(sys,course_id1,course_id2,&is_already_precourse);
+
+    if(is_already_precourse == 1) return SYS_ALREADY_PRE_COURSE;
+
     course1 = findCourseById(sys, course_id1);
     if (course1 == NULL) return SYS_NOT_IN_SYSTEM;
     course2 = findCourseById(sys, course_id2);
