@@ -8,7 +8,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-#define DA_CONVERT_ERROR($$function$$) \
+#define CONVERT_DA_ERROR($$function$$) \
 DAResult $$error$$ = ($$function$$) ; \
 if ($$error$$ == DA_MEMORY_ERROR) {return COURSE_MEMORY_ERROR;} \
 else if ($$error$$ == DA_ILLEGAL_INDEX) {return COURSE_ILLEGAL_PARAMETER;} \
@@ -41,7 +41,7 @@ static Course getPreCourse(Course c, int index) {
 
 static int isPreCourseExist(Course c1, Course c2) {
     int index_of_c2;
-    DA_CONVERT_ERROR(indexOfElement(c1->preCourses, c2, 0, &index_of_c2));
+    CONVERT_DA_ERROR(indexOfElement(c1->preCourses, c2, 0, &index_of_c2));
     if (index_of_c2 == -1) {
         return 0;
     } else {
@@ -112,20 +112,20 @@ CourseResult addPreCourse(Course course1, Course course2) {
 
     int pre_course_size = size(course1->preCourses);
     if (pre_course_size == 0) {
-        DA_CONVERT_ERROR(addElementStart(course1->preCourses, course2));
+        CONVERT_DA_ERROR(addElementStart(course1->preCourses, course2));
         return COURSE_OK;
     } else {
         Course pre_course;
         for (int i = 0; i < pre_course_size; i++) {
             pre_course = getPreCourse(course1, i);
             if (courseLessThan(course2, pre_course) == 1) {
-                DA_CONVERT_ERROR(
+                CONVERT_DA_ERROR(
                         addElementBefore(course1->preCourses, course2,
                                          i));
                 return COURSE_OK;
             }
         }
-        DA_CONVERT_ERROR(addElementEnd(course1->preCourses, course2));
+        CONVERT_DA_ERROR(addElementEnd(course1->preCourses, course2));
         return COURSE_OK;
     }
 }
@@ -137,7 +137,7 @@ CourseResult removePreCourse(Course course1, Course course2) {
     int index_of_course2;
     indexOfElement(course1->preCourses, course2, 0, &index_of_course2);
 
-    DA_CONVERT_ERROR(removeElement(course1->preCourses, index_of_course2));
+    CONVERT_DA_ERROR(removeElement(course1->preCourses, index_of_course2));
     return COURSE_OK;
 }
 

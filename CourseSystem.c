@@ -8,10 +8,9 @@
 #include <assert.h>
 #include "CourseSystem.h"
 
-#define DA_CONVERT_ERROR($$function$$) \
+#define DA_MEMORY_ERROR($$function$$) \
 DAResult $$error$$ = ($$function$$) ; \
 if ($$error$$ == DA_MEMORY_ERROR) {return SYS_MEMORY_PROBLEM;} \
-else if ($$error$$ == DA_ILLEGAL_INDEX) {return COURSE_ILLEGAL_PARAMETER;} \
 
 static char *duplicateString(const char *str);
 
@@ -71,19 +70,19 @@ SysResult sysRemoveCourse(CourseSystem sys, char *course_id) {
     assert(sys != NULL && course_id != NULL);
     Course course_to_be_removed = findCourseById(sys, course_id);
     if (course_to_be_removed == NULL) return SYS_NOT_IN_SYSTEM;
-
+    CourseResult course_error;
 
     Course course_in_system;
     for (int i = 0; i < size(sys->courses); i++) {
-        //TODO: should check DA error and not course as stated in the word file
         course_in_system = getCourse(sys, i);
-        DA_CONVERT_ERROR(removePreCourse(course_in_system,
-                                              course_to_be_removed));
+        course_error = removePreCourse(course_in_system,
+                                              course_to_be_removed);
+        if (course_error == COURSE_NOT_EXIST) return SYS_NOT_IN_SYSTEM;
     }
 
     int index_to_remove;
     indexOfElement(sys->courses, course_to_be_removed, 0, &index_to_remove);
-    DA_CONVERT_ERROR(removeElement(sys->courses, index_to_remove));
+    DA_MEMORY_ERROR(removeElement(sys->courses, index_to_remove));
     destroyCourse(course_to_be_removed);
 
     return SYS_OK;
@@ -110,19 +109,19 @@ SysResult sysAddCourse(CourseSystem system, Course course) {
 
     int courses_number = size(system->courses);
     if (courses_number == 0) {
-        DA_CONVERT_ERROR(addElementStart(system->courses, course));
+        DA_MEMORY_ERROR(addElementStart(system->courses, course));
         return SYS_OK;
     }
 
     for (int i = 0; i < courses_number; ++i) {
         Course currect_course = getCourse(system, i);
         if (courseLessThan(course, currect_course) == 1) {
-            DA_CONVERT_ERROR(addElementBefore(system->courses, course, i));
+            DA_MEMORY_ERROR(addElementBefore(system->courses, course, i));
             return SYS_OK;
         }
     }
 
-    DA_CONVERT_ERROR(addElementEnd(system->courses, course));
+    DA_MEMORY_ERROR(addElementEnd(system->courses, course));
     return SYS_OK;
 }
 
@@ -156,7 +155,7 @@ sysAddPreCourse(CourseSystem sys, char *course_id1, char *course_id2) {
     course2 = findCourseById(sys, course_id2);
     if (course2 == NULL) return SYS_NOT_IN_SYSTEM;
 
-    DA_CONVERT_ERROR(addPreCourse(course1, course2));
+    DA_MEMORY_ERROR(addPreCourse(course1, course2));
 
     return SYS_OK;
 }
