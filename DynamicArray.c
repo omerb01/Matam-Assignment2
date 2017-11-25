@@ -25,7 +25,7 @@ static DAResult updateElementsSize(DynamicArray dynamic_array, int new_size);
 static void swapElements(Element *element1, Element *element2);
 
 DynamicArray createDynamicArray() {
-    DynamicArray dynamic_array = (DynamicArray) malloc(sizeof(DynamicArray));
+    DynamicArray dynamic_array = malloc(sizeof(DynamicArray));
     if (dynamic_array == NULL) return NULL;
     dynamic_array->len = 0;
     dynamic_array->elements = NULL;

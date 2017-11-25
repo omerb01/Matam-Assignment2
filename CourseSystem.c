@@ -181,16 +181,15 @@ SysResult sysRemovePreCourse(CourseSystem system, char *course_id1, char
 SysResult
 sysUpdateCourseName(CourseSystem sys, char *course_id, char *new_name) {
     assert(sys != NULL && course_id != NULL && new_name != NULL);
+
     if(strcmp(new_name, "") == 0) return SYS_MEMORY_PROBLEM;
+
     char *duplicated_name = duplicateString(new_name);
-    char *old_name;
     if (duplicated_name == NULL) return SYS_MEMORY_PROBLEM;
 
     Course new_course = findCourseById(sys, course_id);
-    old_name = new_course->name;
     if (new_course == NULL) return SYS_NOT_IN_SYSTEM;
     courseUpdateName(new_course, duplicated_name);
-    free(old_name);
 
     return SYS_OK;
 }
