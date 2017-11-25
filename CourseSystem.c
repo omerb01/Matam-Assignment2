@@ -162,7 +162,6 @@ sysAddPreCourse(CourseSystem sys, char *course_id1, char *course_id2) {
     return SYS_OK;
 }
 
-// TODO: CHECK WITH ILIYA'S FUNCTION
 SysResult sysRemovePreCourse(CourseSystem system, char *course_id1, char
 *course_id2) {
     assert(system != NULL && course_id1 != NULL && course_id2 != NULL);
@@ -203,7 +202,6 @@ void displaySystem(CourseSystem system) {
     printf("%s\n", system->name);
     displayAllElements(system->courses);
 }
-
 
 void destroySystem(CourseSystem sys) {
     Course course_to_remove;
