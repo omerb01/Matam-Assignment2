@@ -90,10 +90,11 @@ CourseSystem createSystem(char *name) {
     CourseSystem system = malloc(sizeof(*system));
     char *duplicated_name = duplicateString(name);
     DynamicArray courses = createDynamicArray();
-    if(system == NULL || courses == NULL || duplicated_name == NULL){
+    if (system == NULL || courses == NULL || duplicated_name == NULL) {
         free(system);
         free(duplicated_name);
-        if(courses != NULL) destroyDynamicArray(courses);
+        if (courses != NULL) destroyDynamicArray(courses);
+        return NULL;
     }
 
     system->name = duplicated_name;
@@ -191,7 +192,7 @@ sysUpdateCourseName(CourseSystem sys, char *course_id, char *new_name) {
     if (duplicated_name == NULL) return SYS_MEMORY_PROBLEM;
 
     Course new_course = findCourseById(sys, course_id);
-    if (new_course == NULL){
+    if (new_course == NULL) {
         free(duplicated_name);
         return SYS_NOT_IN_SYSTEM;
     }
