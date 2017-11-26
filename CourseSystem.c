@@ -77,8 +77,9 @@ SysResult sysRemoveCourse(CourseSystem sys, char *course_id) {
 
     int index_to_remove;
     indexOfElement(sys->courses, course_to_be_removed, 0, &index_to_remove);
-    DA_MEMORY_ERROR(removeElement(sys->courses, index_to_remove));
     destroyCourse(course_to_be_removed);
+    DA_MEMORY_ERROR(removeElement(sys->courses, index_to_remove));
+
 
     return SYS_OK;
 

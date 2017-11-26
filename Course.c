@@ -42,7 +42,7 @@ static Course getPreCourse(Course c, int index) {
 
 static int isPreCourseExist(Course c1, Course c2) {
     int index_of_c2;
-    CONVERT_DA_ERROR(indexOfElement(c1->preCourses, c2, 0, &index_of_c2));
+    indexOfElement(c1->preCourses, c2, 0, &index_of_c2);
     if (index_of_c2 == -1) {
         return 0;
     } else {
