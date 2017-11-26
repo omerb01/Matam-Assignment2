@@ -210,7 +210,7 @@ void destroySystem(CourseSystem sys) {
     Course course_to_remove;
     for (int i = 0; i < size(sys->courses); i++) {
         course_to_remove = getCourse(sys, i);
-        sysRemoveCourse(sys, course_to_remove->id);
+        destroyCourse(course_to_remove);
     }
     free(sys->name);
     destroyDynamicArray(sys->courses);
