@@ -108,7 +108,6 @@ CourseResult courseUpdateName(Course course1, char *new_name) {
 
     char *name = duplicateString(new_name);
     if (name == NULL){
-        free(name);
         return COURSE_MEMORY_ERROR;
     }
 
