@@ -13,6 +13,7 @@ DAResult $$error$$ = ($$function$$) ; \
 if ($$error$$ == DA_MEMORY_ERROR) {return COURSE_MEMORY_ERROR;} \
 else if ($$error$$ == DA_ILLEGAL_INDEX) {return COURSE_NOT_EXIST;} \
 
+
 static char *duplicateString(const char *str);
 
 static int compareCoursesById(Course course1, Course course2);
@@ -53,20 +54,25 @@ static int isPreCourseExist(Course c1, Course c2) {
 CourseResult
 createCourse(char *id, char *name, double credits, Course *course) {
     assert(name != NULL && id != NULL && course != NULL);
-    
     if (credits < 0) return COURSE_ILLEGAL_PARAMETER;
-    if (strcmp(id, "") == 0 || strcmp(name, "") == 0) return
-                COURSE_MEMORY_ERROR;
 
-    Course new_course;
-    new_course = malloc(sizeof(*new_course));
-    DynamicArray pre_courses;
-    pre_courses = createDynamicArray();
-    if (pre_courses == NULL) return COURSE_MEMORY_ERROR;
+    char *duplicated_id = duplicateString(id);
+    char *duplicated_name = duplicateString(name);
+    DynamicArray pre_courses = createDynamicArray();
+    Course new_course = malloc(sizeof(*new_course));
+    if (duplicated_id == NULL || duplicated_name == NULL || pre_courses ==
+                                                            NULL || new_course
+                                                                    == NULL) {
+        free(duplicated_id);
+        free(duplicated_name);
+        free(new_course);
+        if (pre_courses != NULL) destroyDynamicArray(pre_courses);
+        return COURSE_MEMORY_ERROR;
+    }
 
     new_course->preCourses = pre_courses;
-    new_course->id = duplicateString(id);
-    new_course->name = duplicateString(name);
+    new_course->id = duplicated_id;
+    new_course->name = duplicated_name;
     new_course->credits = credits;
     *course = new_course;
 
@@ -98,8 +104,8 @@ int courseLessThan(Course course1, Course course2) {
 
 CourseResult courseUpdateName(Course course1, char *new_name) {
     assert(course1 != NULL && new_name != NULL);
-    if(strcmp(new_name, "") == 0) return COURSE_MEMORY_ERROR;
     char *temp_store_name = course1->name;
+
     char *name = duplicateString(new_name);
     if (name == NULL) return COURSE_MEMORY_ERROR;
 

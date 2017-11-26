@@ -8,11 +8,12 @@
 #include <assert.h>
 #include "CourseSystem.h"
 
-//TODO: add "IF NULL" statements for all "duplicateString" calls
+// TODO: what is the right way to write destroy functions with loops properly?
 
 #define DA_MEMORY_ERROR($$function$$) \
 DAResult $$error$$ = ($$function$$) ; \
 if ($$error$$ == DA_MEMORY_ERROR) {return SYS_MEMORY_PROBLEM;} \
+
 
 static char *duplicateString(const char *str);
 
@@ -86,13 +87,15 @@ SysResult sysRemoveCourse(CourseSystem sys, char *course_id) {
 }
 
 CourseSystem createSystem(char *name) {
-    if(strcmp(name, "") == 0) return NULL;
     CourseSystem system = malloc(sizeof(*system));
-    if (system == NULL) return NULL;
-    DynamicArray courses = createDynamicArray();
-    if (courses == NULL) return NULL;
-
     char *duplicated_name = duplicateString(name);
+    DynamicArray courses = createDynamicArray();
+    if(system == NULL || courses == NULL || duplicated_name == NULL){
+        free(system);
+        free(duplicated_name);
+        if(courses != NULL) destroyDynamicArray(courses);
+    }
+
     system->name = duplicated_name;
     system->courses = courses;
 
@@ -148,9 +151,9 @@ sysAddPreCourse(CourseSystem sys, char *course_id1, char *course_id2) {
     assert(sys != NULL && course_id1 != NULL && course_id2 != NULL);
     Course course1, course2;
     int is_already_precourse;
-    sysIsPreCourse(sys,course_id1,course_id2,&is_already_precourse);
+    sysIsPreCourse(sys, course_id1, course_id2, &is_already_precourse);
 
-    if(is_already_precourse == 1) return SYS_ALREADY_PRE_COURSE;
+    if (is_already_precourse == 1) return SYS_ALREADY_PRE_COURSE;
 
     course1 = findCourseById(sys, course_id1);
     if (course1 == NULL) return SYS_NOT_IN_SYSTEM;
@@ -184,13 +187,14 @@ SysResult
 sysUpdateCourseName(CourseSystem sys, char *course_id, char *new_name) {
     assert(sys != NULL && course_id != NULL && new_name != NULL);
 
-    if(strcmp(new_name, "") == 0) return SYS_MEMORY_PROBLEM;
-
     char *duplicated_name = duplicateString(new_name);
     if (duplicated_name == NULL) return SYS_MEMORY_PROBLEM;
 
     Course new_course = findCourseById(sys, course_id);
-    if (new_course == NULL) return SYS_NOT_IN_SYSTEM;
+    if (new_course == NULL){
+        free(duplicated_name);
+        return SYS_NOT_IN_SYSTEM;
+    }
     courseUpdateName(new_course, duplicated_name);
 
     return SYS_OK;

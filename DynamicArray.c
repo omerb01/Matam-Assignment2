@@ -33,6 +33,13 @@ DynamicArray createDynamicArray() {
 }
 
 static DAResult updateElementsSize(DynamicArray dynamic_array, int new_size) {
+    if (new_size == 0) {
+        dynamic_array->len = 0;
+        free(dynamic_array->elements);
+        dynamic_array->elements = NULL;
+        return DA_OK;
+    }
+
     Element *array = malloc(sizeof(dynamic_array->elements) * new_size);
     if (array == NULL) return DA_MEMORY_ERROR;
 
