@@ -186,15 +186,12 @@ SysResult
 sysUpdateCourseName(CourseSystem sys, char *course_id, char *new_name) {
     assert(sys != NULL && course_id != NULL && new_name != NULL);
 
-    char *duplicated_name = duplicateString(new_name);
-    if (duplicated_name == NULL) return SYS_MEMORY_PROBLEM;
-
     Course new_course = findCourseById(sys, course_id);
     if (new_course == NULL) {
-        free(duplicated_name);
         return SYS_NOT_IN_SYSTEM;
     }
-    courseUpdateName(new_course, duplicated_name);
+    CourseResult error = courseUpdateName(new_course, new_name);
+    if(error == COURSE_MEMORY_ERROR) return SYS_MEMORY_PROBLEM;
 
     return SYS_OK;
 }
