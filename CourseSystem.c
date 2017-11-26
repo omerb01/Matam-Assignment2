@@ -8,6 +8,8 @@
 #include <assert.h>
 #include "CourseSystem.h"
 
+//TODO: add "IF NULL" statements for all "duplicateString" calls
+
 #define DA_MEMORY_ERROR($$function$$) \
 DAResult $$error$$ = ($$function$$) ; \
 if ($$error$$ == DA_MEMORY_ERROR) {return SYS_MEMORY_PROBLEM;} \
@@ -85,7 +87,7 @@ SysResult sysRemoveCourse(CourseSystem sys, char *course_id) {
 
 CourseSystem createSystem(char *name) {
     if(strcmp(name, "") == 0) return NULL;
-    CourseSystem system = malloc(sizeof(CourseSystem));
+    CourseSystem system = malloc(sizeof(*system));
     if (system == NULL) return NULL;
     DynamicArray courses = createDynamicArray();
     if (courses == NULL) return NULL;
