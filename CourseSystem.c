@@ -8,8 +8,6 @@
 #include <assert.h>
 #include "CourseSystem.h"
 
-// TODO: what is the right way to write destroy functions with loops properly?
-
 #define DA_MEMORY_ERROR($$function$$) \
 DAResult $$error$$ = ($$function$$) ; \
 if ($$error$$ == DA_MEMORY_ERROR) {return SYS_MEMORY_PROBLEM;} \
