@@ -3,7 +3,8 @@ project(Assinment2)
 
 set(CMAKE_C_STANDARD 99)
 
-set(SOURCE_FILES test1.c Course.c Course.h DynamicArray.h DynamicArray.c CourseSystem.h CourseSystem.c)
+set(SOURCE_FILES test1.c Course.c Course.h DynamicArray.h DynamicArray.c
+        CourseSystem.h CourseSystem.c test2.c)
 
 add_executable(Assinment2 ${SOURCE_FILES})
 
