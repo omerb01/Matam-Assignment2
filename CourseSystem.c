@@ -192,7 +192,7 @@ sysUpdateCourseName(CourseSystem sys, char *course_id, char *new_name) {
         return SYS_NOT_IN_SYSTEM;
     }
     CourseResult error = courseUpdateName(new_course, new_name);
-    if(error == COURSE_MEMORY_ERROR) return SYS_MEMORY_PROBLEM;
+    if (error == COURSE_MEMORY_ERROR) return SYS_MEMORY_PROBLEM;
 
     return SYS_OK;
 }
