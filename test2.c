@@ -18,8 +18,7 @@ int main() {
     course_result = createCourse("234111", "Computer Science", -1.0005,
                                  &course1);
     ASSERT("2.01", course_result == COURSE_ILLEGAL_PARAMETER);
-    course_result = createCourse("", "Computer Science", 3.0333, &course1);
-    ASSERT("2.05", course_result == COURSE_MEMORY_ERROR);
+
     course_result = createCourse("234141", "Cumbi", 0, &course1);
     ASSERT("2.02", course_result == COURSE_OK);
 
@@ -32,6 +31,10 @@ int main() {
     course_result = createCourse("234111", "Computer Science", 3.0333,
                                  &course3);
     ASSERT("2.04", course_result == COURSE_OK);
+
+    Course course6;
+    course_result = createCourse("", "Computer Science", 3.0333, &course6);
+    ASSERT("2.05", course_result == COURSE_OK);
 
     Course course4;
     course_result = createCourse("234122", "matam", 999999, &course4);
@@ -57,11 +60,11 @@ int main() {
     result = courseLessThan(course2, course1);
     ASSERT("2.11", result == 1);
 
-    course_result = courseUpdateName(course1, "Doron loves Cuuumbi");
+    course_result = courseUpdateName(course1, "");
     ASSERT("2.12", course_result == COURSE_OK);
 
-    course_result = courseUpdateName(course1, "");
-    ASSERT("2.13", course_result == COURSE_MEMORY_ERROR);
+    course_result = courseUpdateName(course1, "Doron loves Cuuumbi");
+    ASSERT("2.13", course_result == COURSE_OK);
 
     course_result = addPreCourse(course1, course1);
     ASSERT("2.14", course_result == COURSE_THE_SAME_COURSE);
@@ -110,5 +113,6 @@ int main() {
     destroyCourse(course3);
     destroyCourse(course4);
     destroyCourse(course5);
+    destroyCourse(course6);
 
 }
