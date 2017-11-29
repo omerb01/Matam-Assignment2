@@ -23,12 +23,12 @@ int main() {
     ASSERT("2.02", course_result == COURSE_OK);
 
     Course course2;
-    course_result = createCourse("234111", "Computer Science", 3.0333,
-                                 &course2);
+    course_result = createCourse("234111", "   Computer     Science    ",
+                                 3.0333, &course2);
     ASSERT("2.03", course_result == COURSE_OK);
 
     Course course3;
-    course_result = createCourse("234111", "Computer Science", 3.0333,
+    course_result = createCourse("234111", "Computer   Science", 3.0333,
                                  &course3);
     ASSERT("2.04", course_result == COURSE_OK);
 
@@ -63,7 +63,7 @@ int main() {
     course_result = courseUpdateName(course1, "");
     ASSERT("2.12", course_result == COURSE_OK);
 
-    course_result = courseUpdateName(course1, "Doron loves Cuuumbi");
+    course_result = courseUpdateName(course1, "Doron   loves   Cuuumbi  ");
     ASSERT("2.13", course_result == COURSE_OK);
 
     course_result = addPreCourse(course1, course1);
@@ -113,6 +113,5 @@ int main() {
     destroyCourse(course3);
     destroyCourse(course4);
     destroyCourse(course5);
-    destroyCourse(course6);
 
 }

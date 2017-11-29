@@ -152,18 +152,47 @@ CourseResult removePreCourse(Course course1, Course course2) {
     return COURSE_OK;
 }
 
+static void printTrimedString(char *str) {
+    int len = strlen(str);
+    char *tail = str + len - 1;
+    while (tail > str && *tail == ' ') {
+        tail--;
+    }
+
+    while (*str == ' ') {
+        str++;
+    }
+    int space_counter = 0;
+    while (str <= tail) {
+        if (*str == ' ') {
+            space_counter++;
+        } else {
+            space_counter = 0;
+        }
+        if (space_counter <= 1) {
+            printf("%c", *str);
+        }
+        str++;
+    }
+}
+
 void displayCourse(Course course1) {
     static int to_pre_course = 0;
     if (to_pre_course == 0) {
         to_pre_course = 1;
-        printf("%s %s %.1f ", course1->id, course1->name,
-               course1->credits);
-        for (int i = 0; i < size(course1->preCourses); ++i) {
+        printTrimedString(course1->id);
+        printf(" ");
+        printTrimedString(course1->name);
+        printf(" ");
+        printf("%.1f ", course1->credits);
+        int len = size(course1->preCourses);
+        for (int i = 0; i < len; ++i) {
             displayElement(course1->preCourses, i);
+            if (i != len - 1) printf(" ");
         }
         to_pre_course = 0;
     } else {
-        printf("%s ", course1->id);
+        printTrimedString(course1->id);
     }
 }
 

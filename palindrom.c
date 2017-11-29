@@ -13,44 +13,45 @@ struct node_t {
     Node next;
 };
 
-int countElements(Node head) {
-    if (head == NULL) return 0;
-    Node element = head->next;
-    int amount_of_elements = 1;
-    while (element != NULL) {
-        amount_of_elements++;
-        element = element->next;
-    }
-    return amount_of_elements;
-}
-
-void checkIfPalindrom(Node *node1, Node node2, int number_elements, int *
-result) {
-    if (number_elements == 0) {
-        *result = 1;
-        return;
+int getLength(Node head) {
+    int result = 0;
+    while (head != NULL) {
+        result++;
+        head = head->next;
     }
 
-    // getting to end of the end of the list
-    checkIfPalindrom(node1, node2->next, number_elements - 1, result);
-
-    // compares recursivly with node1 and does head++
-    if ((*node1)->data == node2->data && *result) {
-        *node1 = (*node1)->next;
-        return;
-    }
-    *result = 0;
-
+    return result;
 }
 
 bool isPalindrome(Node head) {
-    if (head->next == NULL) return true;
-    Node p2 = head;
-    Node *p1 = &head;
-    int result;
-    checkIfPalindrom(p1, p2, countElements(head), &result);
-    if (result == 0) return false;
-    else return true;
+    if(head == NULL) return true;
+
+    int n = getLength(head);
+
+    Node p1 = head;
+    Node p2 = head->next;
+    Node temp;
+
+    int i;
+    if (n % 2 == 1) i = 0;
+    else i = 1;
+
+    while (i < n / 2) {
+        temp = p2->next;
+        p2->next = p1;
+        p1 = p2;
+        p2 = temp;
+        i++;
+    }
+    if (n % 2 == 1) p1 = p1->next;
+
+    while (p1 != NULL && p2 != NULL) {
+        if (p1->data != p2->data) return false;
+        p1 = p1->next;
+        p2 = p2->next;
+    }
+
+    return true;
 }
 
 int main() {
@@ -62,22 +63,22 @@ int main() {
     struct node_t node5;
     struct node_t node6;
 
-    node1.data = 1;
+    node1.data = 11;
     node1.next = &node2;
 
-    node2.data = 1;
+    node2.data = 11;
     node2.next = &node3;
 
-    node3.data = 11;
+    node3.data = 121;
     node3.next = &node4;
 
-    node4.data = 11;
+    node4.data = 12;
     node4.next = &node5;
 
-    node5.data = 1;
+    node5.data = 11;
     node5.next = &node6;
 
-    node6.data = 1;
+    node6.data = 11;
     node6.next = NULL;
 
     int result = isPalindrome(&node1);
