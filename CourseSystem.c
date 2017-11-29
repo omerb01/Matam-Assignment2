@@ -196,10 +196,35 @@ sysUpdateCourseName(CourseSystem sys, char *course_id, char *new_name) {
     return SYS_OK;
 }
 
+static void printTrimedString(char *str) {
+    int len = strlen(str);
+    char *tail = str + len - 1;
+    while (tail > str && *tail == ' ') {
+        tail--;
+    }
+
+    while (*str == ' ') {
+        str++;
+    }
+    int space_counter = 0;
+    while (str <= tail) {
+        if (*str == ' ') {
+            space_counter++;
+        } else {
+            space_counter = 0;
+        }
+        if (space_counter <= 1) {
+            printf("%c", *str);
+        }
+        str++;
+    }
+}
+
 void displaySystem(CourseSystem system) {
     assert(system != NULL);
 
-    printf("%s\n", system->name);
+    printTrimedString(system->name);
+    printf("\n");
     displayAllElements(system->courses);
 }
 
