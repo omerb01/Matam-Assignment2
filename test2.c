@@ -113,5 +113,5 @@ int main() {
     destroyCourse(course3);
     destroyCourse(course4);
     destroyCourse(course5);
-
+    destroyCourse(course6);
 }
